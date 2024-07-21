@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const LoginSignup = () => {
+const AdminLogin = ({ isAdmin, setIsAdmin }) => {
   const navigate = useNavigate();
 
   const [loginVis, setLoginVis] = useState(true);
@@ -12,8 +12,6 @@ const LoginSignup = () => {
     name: "",
     email: "",
     password: "",
-    confirmPassword: "",
-    accountType: "user",
   });
 
   //changing data of input fields
@@ -41,37 +39,9 @@ const LoginSignup = () => {
       );
 
       localStorage.setItem("userData", JSON.stringify(response.data.user));
-      navigate("/user");
-    } catch (err) {
-      console.log("Error");
-    }
-  };
-
-  const signupHandler = async (e) => {
-    const data2 = [
-      data.name,
-      data.email,
-      data.password,
-      data.confirmPassword,
-      data.accountType,
-    ];
-    e.preventDefault();
-    try {
-      const config = {
-        headers: {
-          "Content-type": "application/json",
-        },
-      };
-
-      const response = await axios.post(
-        "http://localhost:5000/api/v1/auth/signup",
-        data2,
-        config
-      );
-      console.log(response.data);
-      // localStorage.setItem("userData", JSON.stringify(response.data.data));
-      alert("Relogin to activate your account!");
-      navigate("/userls");
+      console.log(response.data.user);
+      setIsAdmin(true);
+      navigate("/adminController");
     } catch (err) {
       console.log("Error");
     }
@@ -79,7 +49,7 @@ const LoginSignup = () => {
 
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem("userData"));
-    if (userData) navigate("/user");
+    if (userData) navigate("/adminController");
   }, []);
 
   return (
@@ -166,4 +136,4 @@ const LoginSignup = () => {
   );
 };
 
-export default LoginSignup;
+export default AdminLogin;

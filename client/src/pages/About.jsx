@@ -116,48 +116,50 @@ const About = () => {
       <div className="ct-seasonStats">
         <h2>Season Statistics</h2>
 
-        <table>
-          <thead>
-            <tr>
-              <th>Season</th>
-              <th>Total Punts</th>
-              <th>Average Yards per Punt</th>
-              <th>Longest Punt</th>
-              <th>Touchbacks</th>
-              <th>Fair Catches</th>
-              <th>Punts Inside 20</th>
-              <th>Punts of 50+ Yards</th>
-              <th>Honors</th>
-              <th>Watch List</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>2022 (Sophomore)</td>
-              <td>52</td>
-              <td>44.6 (Louisville record)</td>
-              <td>68 yards</td>
-              <td>4</td>
-              <td>10</td>
-              <td>19</td>
-              <td>10</td>
-              <td>Honorable Mention All-ACC</td>
-              <td>Ray Guy Award</td>
-            </tr>
-            <tr>
-              <td>2021 (Freshman)</td>
-              <td>48</td>
-              <td>41.9 (8th in Louisville history)</td>
-              <td>73 yards (6th longest in Louisville history)</td>
-              <td>2</td>
-              <td>23</td>
-              <td>17</td>
-              <td>6</td>
-              <td>N/A</td>
-              <td>N/A</td>
-            </tr>
-          </tbody>
-        </table>
+        <div className="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Season</th>
+                <th>Total Punts</th>
+                <th>Average Yards per Punt</th>
+                <th>Longest Punt</th>
+                <th>Touchbacks</th>
+                <th>Fair Catches</th>
+                <th>Punts Inside 20</th>
+                <th>Punts of 50+ Yards</th>
+                <th>Honors</th>
+                <th>Watch List</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>2022 (Sophomore)</td>
+                <td>52</td>
+                <td>44.6 (Louisville record)</td>
+                <td>68 yards</td>
+                <td>4</td>
+                <td>10</td>
+                <td>19</td>
+                <td>10</td>
+                <td>Honorable Mention All-ACC</td>
+                <td>Ray Guy Award</td>
+              </tr>
+              <tr>
+                <td>2021 (Freshman)</td>
+                <td>48</td>
+                <td>41.9 (8th in Louisville history)</td>
+                <td>73 yards (6th longest in Louisville history)</td>
+                <td>2</td>
+                <td>23</td>
+                <td>17</td>
+                <td>6</td>
+                <td>N/A</td>
+                <td>N/A</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
       {/* misc  */}
       <div className="ct-misc">

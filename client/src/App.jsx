@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { Routes, Route } from "react-router-dom";
+import { useEffect, useState, createContext } from "react";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import Footer from "./components/Footer";
 
 // pages
@@ -11,45 +11,82 @@ import Ticket from "./pages/Ticket";
 import Cart from "./pages/Cart";
 import Navbar from "./components/Navbar";
 import LoginSignup from "./pages/LoginSignup";
-import LogSign from "./pages/LogSign";
+import LoggedIn from "./pages/LoggedIn";
+import Orders from "./pages/Orders";
+import AdminAdd from "./pages/AdminAdd";
+import AdminLogin from "./pages/AdminLogin";
+
+const data1 = createContext();
 
 function App() {
-  // true means login page is  active
+  // all properties
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // just store login creds and navigate to /user/account adn fetch accordingly
 
-  const [loginStatus, setLoginStatus] = useState(true);
-  const [loggedIn, setLoggedIn] = useState(false);
+  const navigate = useNavigate();
+  const [token, setToken] = useState("");
+  const [cartItem, setCartItem] = useState([]);
+  const [isAdmin, setIsAdmin] = useState(false);
 
-  const [isOpen, setIsOpen] = useState(false);
-
-  const handleIconClick = () => {
-    setIsOpen((isOpen) => {
-      return !isOpen;
-    });
-  };
+  useEffect(() => {
+    const userData = JSON.parse(localStorage.getItem("userData"));
+    if (userData?.accountType === "Admin") setIsAdmin(true);
+    if (userData?.accountType === "Admin") navigate("/adminController");
+    // console.log(isAdmin, "app");
+    setToken(userData?.token);
+    // console.log(token);
+  }, [isAdmin, token]);
 
   return (
     <>
-      {/* <div
-        className={`slide ${isOpen ? "active" : "hidden"}`}
-        onClick={handleIconClick}
-      >
-        X
-      </div>
-      <div
-        className={`slide ${!isOpen ? "active" : "hidden"}`}
-        onClick={handleIconClick}
-      >
-        |||
-      </div> */}
-      <Navbar isOpen={isOpen} setIsOpen={setIsOpen} />
+      <Navbar isAdmin={isAdmin} />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
-        <Route path="/contact-us" element={<Contact />} />
-        <Route path="/shop/:_id" element={<Shop />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/ticket" element={<Ticket />} />
-        <Route path={loginStatus ? "login" : "signup"} element={<LogSign />} />
+        <Route path="/contact-us" element={<Contact isAdmin={isAdmin} />} />
+
+        <Route
+          path="/shop"
+          element={
+            <Shop
+              cartItem={cartItem}
+              setCartItem={setCartItem}
+              isAdmin={isAdmin}
+            />
+          }
+        />
+
+        <Route
+          path="/cart"
+          element={
+            <Cart
+              cartItem={cartItem}
+              setCartItem={setCartItem}
+              isAdmin={isAdmin}
+            />
+          }
+        />
+        <Route
+          path="/ticket"
+          element={
+            <Ticket
+              cartItem={cartItem}
+              setCartItem={setCartItem}
+              isAdmin={isAdmin}
+            />
+          }
+        />
+        <Route
+          path="/adminController"
+          element={<AdminAdd isAdmin={isAdmin} />}
+        />
+        <Route path="/userls" element={<LoginSignup />} />
+        <Route path="/user" element={<LoggedIn />} />
+        <Route path="/user/orders" element={<Orders />} />
+        <Route
+          path="/admin/login"
+          element={<AdminLogin isAdmin={isAdmin} setIsAdmin={setIsAdmin} />}
+        />
       </Routes>
     </>
   );

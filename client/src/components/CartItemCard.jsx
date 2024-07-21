@@ -10,11 +10,11 @@ const CartItemCard = ({ item, idx, handleQntyChange }) => {
 
   return (
     <div className="ct-cartCard">
-      {item?.type === "merchandise" && (
+      {item?.merchandiseName && (
         <div className="ct-cc--merchandise">
-          <p>{item.name}</p>
-          <p>${item.price}</p>
-          <p>
+          <p>{item.merchandiseName}</p>
+          <p>${item.merchandisePrice}</p>
+          {/* <p>
             <select onChange={handleChange}>
               <option value="0">0 (delete)</option>
               <option value="1" selected>
@@ -25,24 +25,24 @@ const CartItemCard = ({ item, idx, handleQntyChange }) => {
               <option value="4">4</option>
               <option value="5">5</option>
             </select>
-          </p>
-          <p>${item.price * qnty}</p>
+          </p> */}
+          <p>${item.merchandisePrice * qnty}</p>
         </div>
       )}
 
-      {item?.type === "ticket" && (
+      {item?.teamNames && (
         <div className="ct-cc--ticket">
-          <p>{item.matchName}</p>
-          <p>{item.date_time}</p>
+          <p>{item.teamNames}</p>
+          <p>{item.Date}</p>
           <p>${item.price}</p>
-          <select onChange={handleChange}>
+          {/* <select onChange={handleChange}>
             <option value="0">0 (delete)</option>
             <option value="1" selected>
               1
             </option>
             <option value="2">2</option>
             <option value="3">3</option>
-          </select>
+          </select> */}
           <p>${item.price * qnty}</p>
         </div>
       )}

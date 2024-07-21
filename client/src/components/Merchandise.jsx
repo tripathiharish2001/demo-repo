@@ -1,16 +1,25 @@
 import React from "react";
 import test from "../photos/shop.png";
 
-const Merchandise = ({ ele }) => {
+const Merchandise = ({ ele, handleAdd, isAdmin }) => {
+  const handleClick = () => {
+    handleAdd(ele);
+  };
+
   return (
     <div className="card-merchandise">
       <img src={test} alt="merchandise" />
       <div>
         <div className="ct-mCard--details">
-          <p>{ele.name}</p>
-          <p>${ele.price}</p>
+          <p>{ele.merchandiseName}</p>
+          <p>${ele.merchandisePrice}</p>
         </div>
-        <button>Add to Cart</button>
+        <button
+          onClick={handleClick}
+          className={isAdmin ? "isAdmin-hidden" : ""}
+        >
+          Add to Cart
+        </button>
       </div>
     </div>
   );

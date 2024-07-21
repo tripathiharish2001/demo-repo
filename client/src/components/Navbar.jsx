@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import logo from "../photos/logo.png";
 
-const Navbar = ({}) => {
+const Navbar = ({ isAdmin }) => {
   const [active, setActive] = useState("");
 
   // useEffect(() => {
@@ -47,7 +47,7 @@ const Navbar = ({}) => {
               About
             </Link>
           </li>
-          <li>
+          <li className={isAdmin ? "isAdmin-hidden" : ""}>
             <Link
               to="/contact-us"
               className={active === "contact-us" ? "active" : ""}
@@ -58,7 +58,7 @@ const Navbar = ({}) => {
           </li>
           <li>
             <Link
-              to="/shop/:_id"
+              to="/shop"
               className={active === ":_id" ? "active" : ""}
               onClick={clickHandle}
             >
@@ -74,17 +74,18 @@ const Navbar = ({}) => {
               Ticket
             </Link>
           </li>
-          <li>
-            <Link
-              to="/cart"
-              className={active === "cart" ? "active" : ""}
-              onClick={clickHandle}
-            >
+          <li className={isAdmin ? "isAdmin-hidden" : ""}>
+            <Link to="/cart" onClick={clickHandle}>
               Cart
             </Link>
           </li>
+          <li className={isAdmin ? "isAdmin-visible" : "hidden"}>
+            <Link to="/adminController" onClick={clickHandle}>
+              Add Items
+            </Link>
+          </li>
           <li>
-            <Link to="/login" onClick={clickHandle}>
+            <Link to="/userls" onClick={clickHandle}>
               Account
             </Link>
           </li>

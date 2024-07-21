@@ -1,12 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
 
-const Contact = () => {
+const Contact = ({ isAdmin }) => {
+  const navigate = useNavigate();
   const [data, setData] = useState({
     name: "",
     email: "",
     message: "",
   });
+
+  console.log("Admin contact ", isAdmin);
 
   const handleChange = (e) => {
     console.log(e.target.name);
@@ -17,6 +21,10 @@ const Contact = () => {
   const handleSubmit = async () => {
     alert("Submitted");
   };
+
+  useEffect(() => {
+    if (isAdmin) navigate("/");
+  }, []);
 
   return (
     <div className="ct-contact">

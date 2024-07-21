@@ -1,65 +1,30 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import CartItemCard from "../components/CartItemCard";
+import axios from "axios";
 
-const Cart = () => {
-  const [arr, setArr] = useState([
-    {
-      type: "merchandise",
-      name: "T-Shirt",
-      price: 2,
-      qnty: 1,
-    },
-    {
-      type: "merchandise",
-      name: "T-Shirt",
-      price: 4,
-      qnty: 1,
-    },
-    {
-      type: "merchandise",
-      name: "T-Shirt",
-      price: 6,
-      qnty: 1,
-    },
-    {
-      type: "ticket",
-      matchName: "X vs Y",
-      date_time: "dd/mm/yy & xx:yy",
-      price: 7,
-      qnty: 1,
-    },
-    {
-      type: "ticket",
-      matchName: "X vs Y",
-      date_time: "dd/mm/yy & xx:yy",
-      price: 3,
-      qnty: 1,
-    },
-    {
-      type: "ticket",
-      matchName: "X vs Y",
-      date_time: "dd/mm/yy & xx:yy",
-      price: 9,
-      qnty: 1,
-    },
-  ]);
-
+const Cart = ({ isAdmin }) => {
+  const navigate = useNavigate();
   const shippingPrice = 10;
   const taxAmount = 5;
 
-  // seperate overall price
+  const [cartItem, setCartItem] = useState([]);
+
   const [totalMerchandisePrice, setTotalMerchandisePrice] = useState(0);
   const [totalTicketPrice, setTotalTicketPrice] = useState(0);
+  const [token1, setToken] = useState("");
 
   // calculating price/after qnty change/
   const priceSet = () => {
     var dataM = 0;
     var dataT = 0;
 
-    arr.forEach((ele) => {
-      if (ele.type === "merchandise") {
-        dataM += Number(ele.price) * Number(ele.qnty);
-      } else {
+    // console.log(ele);
+
+    cartItem.forEach((ele) => {
+      if (ele?.merchandiseName) {
+        dataM += Number(ele.merchandisePrice) * Number(ele.qnty);
+      } else if (ele?.teamNames) {
         dataT += Number(ele.price) * Number(ele.qnty);
       }
     });
@@ -73,37 +38,86 @@ const Cart = () => {
     if (Number(qnty) === 0) {
       console.log("Zero Mila");
       const tempArr = [];
-      arr.forEach((ele, i) => {
-        if (i !== idx) tempArr.push(arr[i]);
+      cartItem.forEach((ele, i) => {
+        if (i !== idx) tempArr.push(cartItem[i]);
       });
-      setArr(tempArr);
+      setCartItem(tempArr);
       return;
     } else {
       console.log(qnty, idx);
-      arr[idx].qnty = Number(qnty);
+      cartItem[idx].qnty = Number(qnty);
       priceSet();
     }
   };
 
   useEffect(() => {
+    if (isAdmin) navigate("/");
+
+    const fetchCartItems = async () => {
+      try {
+        const userToken = await JSON.parse(localStorage.getItem("userData"))
+          ?.token;
+        if (!userToken) {
+          alert("Login First");
+          navigate("/userls");
+        } else {
+          setToken(userToken);
+        }
+
+        console.log(userToken, "in cart");
+
+        const config = {
+          headers: {
+            "Content-type": "application/json",
+          },
+        };
+
+        const data = {
+          token: userToken,
+        };
+
+        console.log(data, "->>>>>> data");
+
+        const url = "http://localhost:5000/api/v1/cart/showAllGoods";
+
+        const response = await axios.post(url, data, config);
+
+        console.log(response.data.allGoods);
+        setCartItem(response.data.allGoods);
+
+        console.log("Hey");
+      } catch (err) {
+        console.log("Unable to fetch shop");
+      }
+    };
+    fetchCartItems();
     priceSet();
-  }, [arr]);
+  }, [token1]);
+
+  // useEffect(() => {
+  //   if (isAdmin) navigate("/");
+  // }, []);
 
   return (
     <div className="ct-cart">
       <div className="ct-cart--head">Shopping Cart</div>
       <div className="ct-cart--block">
         <div>
-          {arr.map((item, i) => (
-            <CartItemCard
-              key={i}
-              item={item}
-              idx={i}
-              handleQntyChange={handleQntyChange}
-            />
-          ))}
+          {cartItem.length !== 0 &&
+            cartItem.map((item, i) => (
+              <CartItemCard
+                key={i}
+                item={item}
+                idx={i}
+                handleQntyChange={handleQntyChange}
+              />
+            ))}
         </div>
-        <div className="ct-cart--final">
+        <div
+          className={
+            "ct-cart--final " + (cartItem?.length === 0 ? "hidden" : "")
+          }
+        >
           <div className="order-summary">
             <h2>Order Summary</h2>
             <table>
