@@ -675,7 +675,7 @@ p.copyright {
     position: absolute;
     right: 10px;
     top: 10px;
-    z-index: 1000;
+    z-index: 100;
     display: none;
 }
 
@@ -784,14 +784,17 @@ p.copyright {
     display: none;
   }
 
-  .isAdmin-visible{
-
+  .cross{
+    font-size: 3rem;  
+    padding: 1rem;
+    text-align: right;
   }
-
-
 
 /* MEDIA QUERIES */
 
+.cross{
+    display: none;
+}
 
   @media screen and (max-width: 1140px) {
     .ct-nav--links{
@@ -815,9 +818,9 @@ p.copyright {
     word-wrap: break-word;
    }
 
-.ct-aPersonal--name{
-    font-size: 4.4rem;
-   }
+    .ct-aPersonal--name{
+        font-size: 4.4rem;
+    }
    
       .ct-aPersonal--name span{
        letter-spacing: -5px;
@@ -830,6 +833,10 @@ p.copyright {
       .background-video img{
         height: 70%;
         width: auto;
+    }
+
+    .ct-gallery img{
+        max-width: 100%;
     }
 }
 
@@ -956,6 +963,20 @@ p.copyright {
         grid-template-columns: 1fr 1fr 1fr;
     }
 
+    .ct-contact--main{
+        flex-direction: column-reverse;
+        max-width: 100%;
+    }
+
+    .ct-contact--form{
+        width: 100%;
+    }
+
+    .ct-contact--address{
+        width: 100%;
+        padding: 5rem;
+    }
+
   }
 
 
@@ -990,14 +1011,80 @@ p.copyright {
     .ct-shop--item{
         grid-template-columns: 1fr 1fr;
     }
+
+
+    .ct-ah--head {
+        max-width: 100%;
+        padding: 2.5rem;
+    }
+
+
+    .ct-aHonor{
+        flex-direction: column;
+    }
+
+    .ct-ah--list div img{
+        /* background-color: red; */
+        width: 50%;
+        height: auto;
+    }
+
+    .ct-ah--list{
+        grid-template-columns: 1fr;
+       text-align: center;
+
+
+    }
+
+    
+    .ct-ah--list div:nth-child(2){
+        grid-row: 4;
+    }
+
+    .ct-ah--list div:nth-child(6){
+        grid-row: 8;
+    }
+
+    .ct-record--sub{
+        grid-template-columns: 1fr;
+    }
+
+    .ct-rAchieve{
+        text-align: center;
+    }
  
 
   }
 
   @media screen and (max-width: 530px){
 
+
+    .ct-navbar{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 1000;
+        flex-direction: column;
+        justify-content: center;
+        gap: 4rem;
+        padding: 3rem;
+    }
+    
     .ct-nav--links {
-        font-size: 1.3rem;
+        flex-direction: column;
+        gap: 2rem;
+        text-align: center;
+    }
+
+    .ct-nav--links li{
+        font-size: 1.8rem;
+    }
+
+    .ct-navbar  img{
+        height: 200px;
+
     }
 
     .ct-aPersonal{
@@ -1011,19 +1098,6 @@ p.copyright {
 
     .ct-pStats--data{
         grid-template-columns: 1fr 1fr;
-    }
-
-    .ct-ah--list{
-        grid-template-columns: 1fr;
-
-    }
-
-    .ct-ah--list div:nth-child(2){
-        grid-row: 4;
-    }
-
-    .ct-ah--list div:nth-child(6){
-        grid-row: 8;
     }
 
     .ct-rAchieve{
@@ -1044,5 +1118,39 @@ p.copyright {
         width: 80%;
     }
 
+    .ct-gallery{
+        grid-template-columns: 1fr;
+
+    }
+
+    .ct-gallery img{
+        height: 90%;
+    }
+
+    .ct-imgGallery {
+        padding: 10rem;
+    }
+
+    .navHidden{
+        display: none;
+        display: none;
+    }
+
+    .cross{
+        position: absolute;
+        right: 0;
+        padding-top: 2rem;
+        padding-right: 2rem;
+        display: block;
+        z-index: 10000;
+        color: white;
+    }
+
+
+
   }
+
+
+  /* ANIMAIONS */
+
 

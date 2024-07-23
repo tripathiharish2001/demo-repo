@@ -1,4 +1,4 @@
-import { useEffect, useState, createContext } from "react";
+import { useEffect, useState } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import Footer from "./components/Footer";
 
@@ -16,8 +16,6 @@ import Orders from "./pages/Orders";
 import AdminAdd from "./pages/AdminAdd";
 import AdminLogin from "./pages/AdminLogin";
 
-const data1 = createContext();
-
 function App() {
   // all properties
   // const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -30,6 +28,7 @@ function App() {
 
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem("userData"));
+
     if (userData?.accountType === "Admin") setIsAdmin(true);
     if (userData?.accountType === "Admin") navigate("/adminController");
     // console.log(isAdmin, "app");

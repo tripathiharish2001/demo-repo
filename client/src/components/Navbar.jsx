@@ -5,6 +5,7 @@ import logo from "../photos/logo.png";
 
 const Navbar = ({ isAdmin }) => {
   const [active, setActive] = useState("");
+  const [isVisible, setIsVisible] = useState(false);
 
   // useEffect(() => {
   //   const url = window.location.href;
@@ -20,11 +21,20 @@ const Navbar = ({ isAdmin }) => {
     setActive(
       window.location.href.substring(window.location.href.lastIndexOf("/") + 1)
     );
+    setIsVisible(!isVisible);
   };
 
   return (
     <>
-      <div className="ct-navbar">
+      <div
+        className="cross"
+        onClick={() => {
+          setIsVisible(!isVisible);
+        }}
+      >
+        {isVisible ? "︽" : "︾"}
+      </div>
+      <div className={"ct-navbar " + (isVisible ? "" : "navHidden")}>
         <div className="ct-nav--logo">
           <img src={logo} alt="Logo" />
         </div>
